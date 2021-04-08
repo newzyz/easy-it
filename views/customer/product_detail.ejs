@@ -1,0 +1,42 @@
+<%- include('../includes/head.ejs') %>
+    <style>
+            .card button {
+                border: none;
+                outline: 0;
+                padding: 12px;
+                color: white;
+                background-color: #000;
+                text-align: center;
+                cursor: pointer;
+                width: 33%;
+                font-size: 18px;
+            }
+    
+            .card button:hover {
+                opacity: 0.7;
+            }
+    </style>
+    <%- include('../includes/navigation.ejs') %>
+    <div class="container mt-3 justify-content-center">
+        <h2 style="text-align:center">Product Details</h2>
+        <div class="row text-left">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                            <img src="<%- image %>" alt="ProductImage" onerror="this.src='https://lightwidget.com/wp-content/uploads/local-file-not-found.png';" style="width:30%;height:30%;float:left;margin-right: 50px;">
+                            <div>
+                                <h3 style="text-align:center"><b><%= product_name %></b></h3>
+                                <p style="text-align:center"><%= type_name %></p>
+                                <p><b>Price:</b> $<%= price %></p>
+                                <p><b>Description:</b> <%= description %></p>
+                                <p><b>Remaining units:</b> <%= amount %></p>
+                            </div>
+                    </div>
+                    <a href="/addToCart/<%- product_id %>" class="button" style="text-align:center;"><button>Add to Cart</button></a>
+                    <p style="text-align:left;margin-left: 20px;">
+                        <a href="/" class="btn btn-secondary"><i class="fa fa-chevron-left" aria-hidden="true"></i>  Continues Shopping</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <%- include('../includes/end.ejs') %>

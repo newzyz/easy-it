@@ -1,0 +1,116 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/navigation.ejs') %>
+<style>
+    a:link {
+    color: black;
+    text-decoration: none;
+    }
+    a:visited {
+    color: black;
+    }
+    a:hover {
+    color: gray;
+    }
+</style>
+<div class="container mt-12 mb-12">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-12">
+            <div class="p-2">
+                <h1 style="text-align:center">Shopping cart</h3>
+            </div>
+            <% if (products.length > 0) { %>
+                <% for(var i=0; i < products.length; i++) { %>
+                        <div class="row rounded" style=" background-color: white;margin-bottom: 20px;">
+
+                                        <div class="col-md-2" style="float: left;">
+                                            <a href="<%-'/details/'+products[i].product_id%>">
+                                                <img class="rounded" src="<%- products[i].products[0].image %>" alt="ProductImage" onerror="this.src='https://lightwidget.com/wp-content/uploads/local-file-not-found.png';" width="150" style="display: inline-block;">
+                                            </a>
+                                        </div>
+
+
+                                        <div class="col-md-6" style="display: flex;align-items: center;  overflow: hidden;">
+                                            <a href="<%-'/details/'+products[i].product_id%>">
+                                                <span class="font-weight-bold" ><%- products[i].products[0].product_name %></span>
+                                            </a>
+                                        </div>
+                
+                                        <div class="col-md-3" style="  display: flex;align-items: center;justify-content: center;">
+                                            <h5 class="text-grey">$<%- products[i].products[0].price %></h5>
+                                        </div>
+
+                                        <div class="col-md-1" style="display: flex;align-items: center;justify-content: center;">
+                                            <a style="font-size: 40px;margin-right: 20px;" href="" data-target="#confirm-delete" data-toggle="modal" data-href="/deleteProductCart/<%- products[i].product_id %>"><i class="fa fa-trash mb-1 text-danger"></i></a>
+                                        </div>                
+                        </div>  
+                <% } %>
+            <% }else {%>
+            <div class="row rounded" style="background-color: white;margin-bottom: 20px;justify-content: center;">
+                <h5 class="text-grey"><b>- No product founded in the cart -</b></h5>
+            </div>
+            <% }%>
+
+            <div class="d-flex flex-row justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+                <div class="container" style="margin-bottom: 10px;">
+                    <h2 style="text-align: center;">Prices</h2>
+                    <hr>
+                    <% if (products.length > 0) { %>
+                        <% for(var i=0; i < products.length; i++) { %>
+                            <div class="row" style="margin-bottom: 10px;display: flex;justify-content: space-between;">
+                                <div class="col-sm-6" style="display: flex;align-items: center;  overflow: hidden;">
+                                    <%- products[i].products[0].product_name %>
+                                </div>
+                                <div class="col-sm-1" style="display: flex;align-items: center;justify-content: flex-end">
+                                    $<%- products[i].products[0].price %>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% }%>    
+                    <hr>
+                    <div class="row" style="margin-bottom: 10px;display: flex;justify-content: space-between;">
+                        <div class="col-6" style="display: flex;align-items: center;">
+                            <b><span class="price">Total</span></b> 
+                        </div>
+                        <div class="col-1" style="display: flex;align-items: center;justify-content: flex-end">
+                            <span class="price" style="color:black;float: right;" ><b>$<%- sum %></b></span>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;display: flex;justify-content: space-between;">
+                        <div class="col-1" style="display: flex;align-items: center;">
+                            <a href="/" class="btn btn-secondary"><i class="fa fa-chevron-left" aria-hidden="true"></i>  Continues Shopping</a>
+                        </div>
+                        <div class="col-2" style="display: flex;align-items: center;justify-content: flex-end">
+                            <a href="#" class="btn btn-warning"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Check Out</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <!-- Modal Delete -->
+            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Delete
+                        </div>
+                        <div class="modal-body">
+                            Are you sure to delete this product from cart?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-danger btn-ok">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../includes/end.ejs') %>
+</div>
+<script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+</script>

@@ -1,0 +1,80 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="/css/product-card.css">
+    <%- include('../includes/navigation.ejs') %>
+    
+        <div class="container mt-3">
+            <h2>Products</h2>
+            <p>Type product name to search for editing product:</p>
+            <div class="row">
+                <div class="col-md-10">
+                    <form class="form-inline" action="/admin/search" method="GET">
+                        <input class="form-control col-md-6" type="search" placeholder="Search" aria-label="Search" name="search_item" value="<%= search_item %>">
+                        <label style="margin-left:10px;" for="type">Type</label>
+                        
+                        <select class="form-control col-md-3" style="margin-left:10px;" id="type" name="type">
+                            <option value="all" selected>ALL-TYPES</option>
+                            <% if (prod_types.length > 0) { %>
+                                <% for(var i=0; i < prod_types.length; i++) { %>
+                                    <% if (prod_types[i]._id.equals(type)) { %>
+                                        <option value="<%= prod_types[i]._id %>" selected><%= prod_types[i].type_name %></option>
+                                    <% }else{ %> 
+                                        <option value="<%= prod_types[i]._id %>"><%= prod_types[i].type_name %></option>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                        </select>
+                        <button class="btn btn-success col-md-2" style="margin-left:10px;" type="submit"><span style="float: left;"><i class="fa fa-search" ></i></span>Search</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <a href="/admin/insert" class="btn btn-primary btn-block"><i class="fa fa-plus" aria-hidden="true"></i> New Product</a>
+                </div>
+            </div>
+            <br>
+            <div class="row" style="text-align: center;">
+            <% if (prods.length > 0) { %>
+
+                <% prods.map((product, t) => { %>
+                    <div class="column">
+                        <div class="card">
+                            <a id="detail" href="<%-'/details/'+product._id%>" style="text-decoration:none;">
+                            <img src="<%- product.image %>" alt="ProductImage" onerror="this.src='https://lightwidget.com/wp-content/uploads/local-file-not-found.png';" style="width:100%">
+                            <h5><%- product.product_name %></h5>
+                            </a>
+                            <p class="price" style="color: green;">$<%- product.price%></p>
+                            <p><b><span id="head">Description : </span></b><%- product.description%></p>
+                            <p><b><span id="head">Remaining Units : </span></b><%- product.amount%></p>
+                            <p><b><span id="head">Type :</span></b> <%- product.types[0].type_name%></p>
+                            <p><a href="<%- '/admin/update/'+product._id%>" class="btn btn-warning" style="margin-right: 10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a><a href="" data-href="<%- '/admin/delete/'+product._id%>" class="btn btn-danger" data-target="#confirm-delete" data-toggle="modal" > <i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></p>
+                        </div>
+                    </div>
+                <% }) %>
+                <% } else { %>
+                    <div class="col-md-12">
+                        <h1 style="justify-self: center;">No Products Found!</h1>
+                    </div>
+                <% } %>
+                <!-- Modal Delete -->
+                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                Delete
+                            </div>
+                            <div class="modal-body">
+                                Are you sure to delete this product from the shop?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-danger btn-ok">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $('#confirm-delete').on('show.bs.modal', function(e) {
+                    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+                });
+            </script>
+            <%- include('../includes/end.ejs') %>

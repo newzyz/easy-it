@@ -1,0 +1,19 @@
+<body>
+        <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand p-2 text-white" style="font-family: cursive;font-size: 20px;" href="/"><b>Eazy </b><img src="/image/icon32.png" alt="icon" style="width: 25px;height: 25px;"></a>
+                <div class="collapse navbar-collapse" id="navbar1">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="p-2 text-white" href="/admin/">Manage Product</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="p-2 text-white" href="/cart/"><i class="fa" style="font-size:24px">&#xf07a;</i></a>
+                            <% if (count != 0) { %>
+                                <span class='badge badge-warning' id='lblCartCount'><%= count%></span>
+                            <%}%>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
